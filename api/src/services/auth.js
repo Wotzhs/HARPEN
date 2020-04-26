@@ -23,6 +23,15 @@ class AuthService {
 			return e;
 		}
 	}
+
+	static verifyToken(token) {
+		const key = JWK.asKey(process.env.JWT_SECRET);
+		try {
+			return JWT.verify(token, key);
+		} catch (e) {
+			return null;
+		}
+	}
 }
 
 export default AuthService;
