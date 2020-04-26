@@ -38,7 +38,14 @@ router.post("/", async (req, res, next) => {
 		return res.json({ error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR) });
 	}
 
-	res.json({ token });
+	const tenYears = 1000 * 60 * 60 * 24 * 365 * 10;
+	res.cookie("token", token, {
+		expires: new Date(Date.now() + tenYears),
+		httpOnly: true,
+		secure: process.env.NODE_ENV === "production"
+	});
+
+	res.json({ email, role: user.role_name });
 });
 
 export default router;
