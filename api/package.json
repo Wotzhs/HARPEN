@@ -24,6 +24,7 @@
     "debug": "~2.6.9",
     "express": "^4.16.4",
     "http-status-codes": "^1.4.0",
+    "jose": "^1.26.0",
     "morgan": "~1.9.1",
     "tai-password-strength": "^1.1.1",
     "uuid": "^7.0.3",
