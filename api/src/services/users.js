@@ -26,7 +26,7 @@ class UsersService {
 
 	static async existsUser(user) {
 		if (user instanceof User === false) {
-			return Error("argument user must be an instance of user");
+			return Error(User.NOT_USER_INSTANCE_MSG);
 		}
 
 		try {
