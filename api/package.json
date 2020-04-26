@@ -25,7 +25,8 @@
     "express": "^4.16.4",
     "http-status-codes": "^1.4.0",
     "morgan": "~1.9.1",
-    "uuid": "^7.0.3"
+    "uuid": "^7.0.3",
+    "validator": "^13.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
