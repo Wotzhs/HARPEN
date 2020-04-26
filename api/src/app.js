@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 import "regenerator-runtime/runtime";
 
 import usersRouter from "./routes/users";
+import authRouter from "./routes/auth";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 
 app.use("/api/users", usersRouter);
+app.use("/api/auth", authRouter);
 
 app.get("*", (req,res) => res.sendFile(path.join(__dirname, "public", "index.html")));
 
