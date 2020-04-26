@@ -5,7 +5,7 @@ import { PasswordStrength } from "tai-password-strength";
 const SALT_ROUNDS = 10;
 
 class User {
-	static NOT_USER_INSTANCE_MSG = "argument user not an instance of user";
+	static INCORRECT_INSTANCE_MSG = "argument user not an instance of user";
 
 	constructor({ id, email, password, password_hash, roleId, role_name }) {
 		this.id = id;

@@ -6,7 +6,7 @@ import { AuthError } from "../models/error";
 class AuthService {
 	static async generateToken(user, password) {
 		if (user instanceof User === false) {
-			return Error(User.NOT_USER_INSTANCE_MSG);
+			return Error(User.INCORRECT_INSTANCE_MSG);
 		}
 
 		try {
