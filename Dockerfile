@@ -32,7 +32,7 @@ RUN npm run transpile
 # run server
 # =====================
 FROM alpine:latest
-RUN apk add npm nodejs
+RUN apk add nodejs
 RUN mkdir -p app/public
 RUN mkdir -p app/node_modules
 RUN mkdir -p app/migrations
