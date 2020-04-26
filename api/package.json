@@ -10,13 +10,24 @@
     "server": "node ./dist/bin/www",
     "dev": "NODE_ENV=development npm-run-all build server",
     "watch:dev": "nodemon",
-    "prod": "NODE_ENV=production npm-run-all build server"
+    "prod": "NODE_ENV=production npm-run-all build server",
+    "migrate:up": "db-migrate up",
+    "migrate:down": "db-migrate down",
+    "migragte:reset": "db-migrate reset"
   },
   "dependencies": {
+    "bcrypt": "^4.0.1",
+    "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.4",
+    "db-migrate": "^0.11.10",
+    "db-migrate-pg": "^1.2.1",
     "debug": "~2.6.9",
     "express": "^4.16.4",
-    "morgan": "~1.9.1"
+    "http-status-codes": "^1.4.0",
+    "morgan": "~1.9.1",
+    "tai-password-strength": "^1.1.1",
+    "uuid": "^7.0.3",
+    "validator": "^13.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -25,6 +36,7 @@
     "eslint": "^6.8.0",
     "nodemon": "^2.0.3",
     "npm-run-all": "^4.1.5",
+    "regenerator-runtime": "^0.13.5",
     "rimraf": "^3.0.2"
   }
 }
