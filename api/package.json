@@ -22,6 +22,7 @@
     "db-migrate-pg": "^1.2.1",
     "debug": "~2.6.9",
     "express": "^4.16.4",
+    "http-status-codes": "^1.4.0",
     "morgan": "~1.9.1"
   },
   "devDependencies": {
