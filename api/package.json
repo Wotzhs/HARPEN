@@ -13,7 +13,7 @@
     "prod": "NODE_ENV=production npm-run-all build server",
     "migrate:up": "db-migrate up",
     "migrate:down": "db-migrate down",
-    "migragte:reset": "db-migrate reset"
+    "migrate:reset": "db-migrate reset"
   },
   "dependencies": {
     "bcrypt": "^4.0.1",
