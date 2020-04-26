@@ -1,4 +1,7 @@
 class AuthError extends Error {
+	static PASSWORD_EMAIL_MISMATCH_MSG = "email or password is incorrect";
+	static MISSING_PASSWORD_OR_EMAIL_MSG = "missing email or password";
+
 	constructor(...params) {
 		super(...params);
 
@@ -7,14 +10,6 @@ class AuthError extends Error {
 		}
 
 		this.name = "AuthError";
-	}
-
-	static get PASSWORD_EMAIL_MISMATCH_MSG() {
-		return "email or password is incorrect";
-	}
-
-	static get MISSING_PASSWORD_OR_EMAIL_MSG() {
-		return "missing email or password";
 	}
 }
 

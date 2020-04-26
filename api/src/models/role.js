@@ -1,14 +1,9 @@
 class Role {
+	static RECRUITER = "recruiter";
+	static CANDIDATE = "candidate";
+	
 	constructor(name) {
 		this.name = name;
-	}
-
-	static get RECRUITER() {
-		return "recruiter";
-	}
-
-	static get CANDIDATE() {
-		return "candidate";
 	}
 }
 
