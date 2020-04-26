@@ -55,6 +55,10 @@ class User {
 
 		return Object.keys(error).length > 0 ? error : null;
 	}
+
+	static get NOT_USER_INSTANCE_MSG() {
+		return "argument user not an instance of user";
+	}
 }
 
 export default User;
