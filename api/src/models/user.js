@@ -5,10 +5,13 @@ import { PasswordStrength } from "tai-password-strength";
 const SALT_ROUNDS = 10;
 
 class User {
-	constructor(email, password, roleId) {
+	constructor({ id, email, password, password_hash, roleId, role_name }) {
+		this.id = id;
 		this.email = email;
 		this.password = password;
+		this.password_hash = password_hash;
 		this.role_id = roleId;
+		this.role_name = role_name;
 	}
 
 	async getPasswordHash() {
