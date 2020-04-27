@@ -7,12 +7,12 @@ const SALT_ROUNDS = 10;
 class User {
 	static INCORRECT_INSTANCE_MSG = "argument user not an instance of user";
 
-	constructor({ id, email, password, password_hash, roleId, role_name }) {
+	constructor({ id, email, password, password_hash, role_id, role_name }) {
 		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.password_hash = password_hash;
-		this.role_id = roleId;
+		this.role_id = role_id;
 		this.role_name = role_name;
 	}
 
