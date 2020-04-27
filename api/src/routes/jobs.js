@@ -86,9 +86,16 @@ router.put("/", async (req, res, next) => {
 });
 
 router.delete("/", async (req, res, next) => {
-	if (!req.token_decrypted.user_id) {
+	if (!req.token_decrypted || !req.token_decrypted.user_id) {
 		res.status(HttpStatus.UNAUTHORIZED);
 		return res.json({ error: HttpStatus.getStatusText(HttpStatus.UNAUTHORIZED) });
+	}
+
+	const result = await JobService.deleteJob({ slug: req.query.slug, user_id: req.token_decrypted.user_id });
+	if (result instanceof Error) {
+		console.log(result);
+		res.status(HttpStatus.INTERNAL_SERVER_ERROR);
+		res.json({ error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR) });
 	}
 
 	res.json();

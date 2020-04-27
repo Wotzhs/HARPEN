@@ -126,8 +126,15 @@ class JobsService {
 		}
 	}
 
-	static async deleteJob(id) {
-
+	static async deleteJob({ slug, user_id }) {
+		try {
+			return await pool.query(
+				"DELETE FROM jobs WHERE slug = $1 and user_id = $2",
+				[ slug, user_id ]
+			);
+		} catch (e) {
+			return e;
+		}
 	}
 }
 
