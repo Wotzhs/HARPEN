@@ -3,6 +3,7 @@ import HttpStatus from "http-status-codes";
 import Job from "../models/job";
 import UsersService from "../services/users";
 import AuthService from "../services/auth";
+import JobService from "../services/jobs";
 
 const router = express.Router();
 
@@ -32,8 +33,15 @@ router.post("/", async (req, res, next) => {
 		return res.json({ errors });
 	}
 
+	const newJobId = await JobService.createJob(newJob);
+	if (newJobId instanceof Error) {
+		console.log(newJobId);
+		res.status(HttpStatus.INTERNAL_SERVER_ERROR);
+		return res.json({ error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR) });
+	}
+
 	res.status(HttpStatus.CREATED);
-	res.json();
+	res.json({ id: newJobId });
 });
 
 router.put("/", async (req, res, next) => {
@@ -50,8 +58,8 @@ router.delete("/", async (req, res, next) => {
 		res.status(HttpStatus.UNAUTHORIZED);
 		return res.json({ error: HttpStatus.getStatusText(HttpStatus.UNAUTHORIZED) });
 	}
-	
+
 	res.json();
-}) 
+});
 
 export default router;
