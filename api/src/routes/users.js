@@ -7,7 +7,7 @@ import UsersService from "../services/users";
 
 const router = express.Router();
 
-router.post("/new", async (req, res, next) => {
+router.post("/", async (req, res, next) => {
 	const { email, password, user_type } = req.body;
 
 	if (user_type !== Role.RECRUITER && user_type !== Role.CANDIDATE) {
@@ -41,7 +41,7 @@ router.post("/new", async (req, res, next) => {
 
 	if (exists) {
 		res.status(HttpStatus.CONFLICT);
-		return res.json({ error: `an account with the email ${email} has already been registered previously` });
+		return res.json({ errors: { email: `an account with the email ${email} has already been registered previously` } });
 	}
 
 	const result = await UsersService.createUser(newUser);
