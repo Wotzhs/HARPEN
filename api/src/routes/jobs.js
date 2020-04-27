@@ -73,7 +73,7 @@ router.post("/", async (req, res, next) => {
 	}
 
 	res.status(HttpStatus.CREATED);
-	res.json({ id: newJobId });
+	res.json(newJobId);
 });
 
 router.put("/", async (req, res, next) => {
