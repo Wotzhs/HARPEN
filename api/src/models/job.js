@@ -22,7 +22,7 @@ class Job {
 		}
 	}
 
-	validate() {
+	validate({ extraFields = [] }) {
 		const error = {};
 		if (!this.title) {
 			error.title = "missing title";
@@ -41,6 +41,12 @@ class Job {
 		}
 		if (!this.user_id) {
 			error.user_id = "missing user_id";
+		}
+
+		for (let i = 0; i < extraFields.length; i++) {
+			if (!this[extraFields[i]]) {
+				error[extraFields[i]] = `missing ${extraFields[i]}`
+			}
 		}
 
 		return Object.keys(error).length > 0 ? error : null;
