@@ -22,7 +22,11 @@ const Menu = () => {
 			<div id="navbarBasicExample" className="navbar-menu">
 				{ isLoggedIn &&
 					<div className="navbar-start">
-						<a className="navbar-item">Dashboard</a>
+						<Link className="navbar-item" to={"/new"}>
+							<span className="button is-primary is-outlined is-small">
+								Post a new job
+							</span>
+						</Link>
 					</div>
 				}
 

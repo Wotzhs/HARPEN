@@ -22,7 +22,7 @@ class Job {
 		}
 	}
 
-	validate({ extraFields = [] }) {
+	validate({extraFields = []} = {}) {
 		const error = {};
 		if (!this.title) {
 			error.title = "missing title";
@@ -35,9 +35,6 @@ class Job {
 		}
 		if (!this.posting_date) {
 			error.posting_date = "missing posting_date";
-		}
-		if (!this.status) {
-			error.status = "missing status";
 		}
 		if (!this.user_id) {
 			error.user_id = "missing user_id";

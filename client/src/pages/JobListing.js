@@ -41,7 +41,8 @@ const JobListing = () => {
 										<p>
 											<Link to={ job.slug }>
 												<strong>{ job.title }</strong>
-											</Link> @ <small>{ job.location }</small>
+											</Link> @ <small>{ job.location }</small>&nbsp;
+											{ !job.status && <span class="tag is-warning">inactive</span> }
 											<br />
 
 											{ job.description }
