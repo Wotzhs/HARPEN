@@ -5,7 +5,7 @@ import parseISO from "date-fns/parseISO";
 import formatRelative from "date-fns/formatRelative";
 import { IdentityContext } from "../contexts/Identity";
 
-const JobDetails = ({ match }) => {
+const JobDetails = ({ history, match }) => {
 	const [ job, setJob ] = useState({});
 	const [ errors, setErrors ] = useState({});
 	const { identity } = useContext(IdentityContext);
@@ -16,6 +16,7 @@ const JobDetails = ({ match }) => {
 			setJob({ ...job, ...(res.data) });
 		} catch (e) {
 			setErrors({ ...errors, ...(e.response.data) });
+			history.push("/");
 		}
 	};
 
@@ -29,7 +30,8 @@ const JobDetails = ({ match }) => {
 				<div className="hero-body">
 					<div className="container">
 						<h1 className="title">
-							{ job.title }
+							{ job.title }&nbsp;
+							{ !job.status && <span class="tag is-warning">inactive</span> }
 						</h1>
 						<small>Located at { job.location }</small>
 						<br/>
