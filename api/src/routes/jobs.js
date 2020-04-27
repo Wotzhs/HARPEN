@@ -14,8 +14,17 @@ router.use((req, res, next) => {
 });
 
 router.get("/", async (req, res, next) => {
-	const { offset, limit } = req.query;
-	const result = await JobService.getJobList({ offset, limit });
+	const { offset, limit, email } = req.query;
+	// get own jobs
+	if ((email && !req.token_decrypted) || (req.token_decrypted && email !== req.token_decrypted.email)) {
+		res.status(HttpStatus.UNAUTHORIZED);
+		return res.json({ error: HttpStatus.getStatusText(HttpStatus.UNAUTHORIZED) });
+	}
+
+	const result = email
+		? await JobService.getOwnJobList({ offset, limit, user_id: req.token_decrypted.user_id })
+		: await JobService.getJobList({ offset, limit });
+
 	if (result instanceof Error) {
 		console.log(result);
 		res.status(HttpStatus.INTERNAL_SERVER_ERROR);

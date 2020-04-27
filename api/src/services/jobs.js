@@ -73,28 +73,54 @@ class JobsService {
 		}
 	}
 
-	static async getJobList({ offset, limit }) {
+	static async getJobList({ offset, limit, role_name }) {
 		try {
 			let sql = `
-				SELECT j.slug, j.title, j.location, j.description, j.posting_date, j.jd_file, u.email
+				SELECT j.slug, j.title, j.location, j.description, j.posting_date, j.jd_file, j.status, u.email
 				FROM jobs j
 				LEFT JOIN users u on j.user_id = u.id
-				WHERE j.status <> false
-				ORDER BY j.posting_date DESC
 			`;
 
-			if (offset && limit) {
-				sql += "LIMIT $1 OFFSET $2";
+			let countSql = "SELECT COUNT(id) FROM jobs ";
+
+			if (role_name !== Role.RECRUITER) {
+				sql += "WHERE j.status <> false ";
+				countSql += "WHERE status <> false ";
 			}
 
+			sql += "ORDER BY j.posting_date DESC ";
+
+			let params;
+			if (offset && limit) {
+				sql += "LIMIT $1 OFFSET $2";
+				params = [ limit, offset ];
+			}
+
+			const result = await pool.query(sql, params);
+			const totalCount = await pool.query(countSql);
+
+			return { total_count: totalCount.rows[0].count*1, results: result.rows, page: offset, limit };
+		} catch (e) {
+			return e;
+		}
+	}
+
+	static async getOwnJobList({ offset, limit, user_id }) {
+		try {
 			const result = await pool.query(
-				sql,
-				offset && limit ? [ limit, offset ] : null
+				`
+				SELECT j.slug, j.title, j.location, j.description, j.posting_date, j.jd_file, j.status, u.email
+				FROM jobs j
+				LEFT JOIN users u on j.user_id = u.id
+				WHERE j.user_id = $1
+				ORDER BY j.posting_date DESC
+				`,
+				[ user_id ]
 			);
 
-			const totalCount = await pool.query("SELECT COUNT(id) FROM jobs");
+			const totalCount = await pool.query("SELECT COUNT(id) from jobs WHERE user_id = $1", [ user_id ]);
 
-			return { total_count: totalCount.rows[0].count*1, results: result.rows };
+			return { total_count: totalCount.rows[0].count*1, results: result.rows, page: offset, limit };
 		} catch (e) {
 			return e;
 		}
