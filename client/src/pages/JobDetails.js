@@ -31,7 +31,7 @@ const JobDetails = ({ history, match }) => {
 					<div className="container">
 						<h1 className="title">
 							{ job.title }&nbsp;
-							{ !job.status && <span class="tag is-warning">inactive</span> }
+							{ !job.status && <span className="tag is-warning">inactive</span> }
 						</h1>
 						<small>Located at { job.location }</small>
 						<br/>

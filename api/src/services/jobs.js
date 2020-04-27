@@ -49,19 +49,19 @@ class JobsService {
 		}
 	}
 
-	static async updateJob({ updatedJob, user_id }) {
+	static async updateJob({ updatedJob }) {
 		if (updatedJob instanceof Job === false) {
 			return Error(Job.INCORRECT_INSTANCE_MSG);
 		}
 
-		const { title, location, description, posting_date, status, jd_file, slug } = updatedJob;
+		const { title, location, description, posting_date, status, jd_file, slug, user_id } = updatedJob;
 
 		try {
 			const result = await pool.query(
 				`
 				UPDATE jobs SET title=$1, location=$2, description=$3, posting_date=$4, status=$5, jd_file=$6
 				WHERE user_id=$7 and slug=$8
-				RETURNING title, location, description, posting_date, status, jd_file
+				RETURNING slug
 				`,
 				[ title, location, description, posting_date, status, jd_file, user_id, slug ]
 			);
@@ -69,7 +69,7 @@ class JobsService {
 			if (result.rowCount < 1) {
 				throw new RecordNotFoundError("record not found or not authorised to make changes");
 			}
-			return result.rows;
+			return result.rows[0];
 		} catch (e) {
 			return e;
 		}

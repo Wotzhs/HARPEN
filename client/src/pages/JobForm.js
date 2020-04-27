@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DatePicker from "react-date-picker";
 
-const JobForm = ({ history }) => {
+const JobForm = ({ match, history }) => {
 	const [ formValues, setFormValues ] = useState({});
 	const [ errors, setErrors ] = useState({});
 
@@ -21,9 +21,18 @@ const JobForm = ({ history }) => {
 			formValues.posting_date = new Date();
 		}
 
+		if (formValues.status === undefined) {
+			formValues.status = true;
+		}
+
+		const isEdit = match.params && match.params.slug;
+
 		try {
-			const res = await axios.post("/api/jobs", { ...formValues });
-			history.push(res.data.slug);
+			const res = isEdit
+				? await axios.put("/api/jobs", { ...formValues })
+				: await axios.post("/api/jobs", { ...formValues });
+
+			history.push(`/${res.data.slug}`);
 		} catch (e) {
 			setErrors({ ...errors, ...(e.response.data) });
 		}
@@ -32,6 +41,23 @@ const JobForm = ({ history }) => {
 	const setPostDate = date => {
 		setFormValues({ ...formValues, posting_date: date });
 	};
+
+	const fetchJobDetails = async () => {
+		if (!match.params.slug) {
+			setFormValues({});
+			return;
+		}
+		try {
+			const res = await axios.get(`/api/jobs/${ match.params.slug }`);
+			setFormValues({ ...formValues, ...(res.data) });
+		} catch (e) {
+			setErrors({ ...errors, ...(e.response.data) });
+		}
+	};
+
+	useEffect(()=> {
+		(async () => await fetchJobDetails())();
+	}, [ match.params.slug ]);
 
 	return (
 		<form onSubmit={ handleSubmit } className="wider-width auto-margin">
@@ -100,7 +126,7 @@ const JobForm = ({ history }) => {
 						name="status"
 						className="switch is-rtl"
 						onChange={ handleStatusChange }
-						defaultChecked
+						checked={ formValues.status || match.path === "/new" }
 					/>
 					<label htmlFor="status">Is job active?</label>
 				</div>
