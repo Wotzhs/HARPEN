@@ -36,9 +36,6 @@ class Job {
 		if (!this.posting_date) {
 			error.posting_date = "missing posting_date";
 		}
-		if (!this.status) {
-			error.status = "missing status";
-		}
 		if (!this.user_id) {
 			error.user_id = "missing user_id";
 		}
