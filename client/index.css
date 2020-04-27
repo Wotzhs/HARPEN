@@ -11,3 +11,7 @@
 .wide-width {
 	width: 45vw;
 }
+
+.flex-space-between {
+	justify-content: space-between;
+}
