@@ -22,7 +22,7 @@ class Job {
 		}
 	}
 
-	validate({ extraFields = [] }) {
+	validate({extraFields = []} = {}) {
 		const error = {};
 		if (!this.title) {
 			error.title = "missing title";
