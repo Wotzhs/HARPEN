@@ -7,6 +7,7 @@ import "regenerator-runtime/runtime";
 
 import usersRouter from "./routes/users";
 import authRouter from "./routes/auth";
+import jobsRouter from "./routes/jobs";
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(bodyParser.json());
 
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/jobs", jobsRouter);
 
 app.get("*", (req,res) => res.sendFile(path.join(__dirname, "public", "index.html")));
 

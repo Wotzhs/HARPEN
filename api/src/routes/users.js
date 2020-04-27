@@ -15,14 +15,17 @@ router.post("/new", async (req, res, next) => {
 		return res.json({ error: `user_type must be either '${ Role.RECRUITER }' or '${ Role.CANDIDATE }` });
 	}
 
-	const roleId = user_type === "recruiter" ? await RolesService.getRecruiterRoleId() : await RolesService.getCandidateRoleId();
-	if (roleId instanceof Error) {
-		console.log(roleId);
+	const role_id = user_type === "recruiter"
+		? await RolesService.getRecruiterRoleId()
+		: await RolesService.getCandidateRoleId();
+
+	if (role_id instanceof Error) {
+		console.log(role_id);
 		res.status(HttpStatus.INTERNAL_SERVER_ERROR);
 		return res.json({ error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR) });
 	}
 
-	const newUser = new User(email, password, roleId);
+	const newUser = new User({ email, password, role_id });
 	const errors = newUser.validate();
 	if (errors) {
 		res.status(HttpStatus.BAD_REQUEST);

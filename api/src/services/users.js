@@ -6,7 +6,7 @@ import { RecordNotFoundError } from "../models/error";
 class UsersService {
 	static async createUser(user) {
 		if (user instanceof User === false) {
-			return Error("argument user must be an instance of user");
+			return Error(User.INCORRECT_INSTANCE_MSG);
 		}
 
 		const passwordHash = await user.getPasswordHash();
@@ -26,7 +26,7 @@ class UsersService {
 
 	static async existsUser(user) {
 		if (user instanceof User === false) {
-			return Error(User.NOT_USER_INSTANCE_MSG);
+			return Error(User.INCORRECT_INSTANCE_MSG);
 		}
 
 		try {

@@ -14,9 +14,7 @@
         "ecmaVersion": 2018,
         "sourceType": "module"
     },
-    "plugins": [
-        "@babel/plugin-proposal-private-methods"
-    ],
+    "plugins": [],
     "rules": {
         "indent": [
             "error",

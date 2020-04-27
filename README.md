@@ -20,3 +20,8 @@ export JWT_SECRET=dirty_secret
 
 ### Running the the application
 
+First and foremost, run the migrations
+
+```
+npm run migrate:up
+```

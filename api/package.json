@@ -26,6 +26,7 @@
     "http-status-codes": "^1.4.0",
     "jose": "^1.26.0",
     "morgan": "~1.9.1",
+    "slugify": "^1.4.0",
     "tai-password-strength": "^1.1.1",
     "uuid": "^7.0.3",
     "validator": "^13.0.0"
