@@ -22,10 +22,10 @@ const Menu = () => {
 			<div id="navbarBasicExample" className="navbar-menu">
 				{ isLoggedIn &&
 					<div className="navbar-start">
-						<a className="navbar-item">Home</a>
+						<a className="navbar-item">Dashboard</a>
 					</div>
 				}
-				
+
 				<div className="navbar-end">
 					<div className="navbar-item">
 						<div className="buttons">
@@ -40,7 +40,7 @@ const Menu = () => {
 								</React.Fragment>
 							}
 							{ isLoggedIn &&
-								<button onClick={ () => setIdentity(null) }>
+								<button className="button is-danger" onClick={ () => setIdentity(null) }>
 									Log out
 								</button>
 							}

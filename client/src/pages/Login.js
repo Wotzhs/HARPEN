@@ -1,21 +1,57 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
+import { IdentityContext } from "../contexts/Identity";
 
-const Login = () => {
+const Login = ({ history }) => {
+	const [ formValues, setFormValues ] = useState({});
+	const [ errors, setErrors ] = useState({});
+	const { setIdentity } = useContext(IdentityContext);
+
+	const handleChange = e => {
+		setFormValues({ ...formValues, [e.target.name]: e.target.value });
+	};
+
+	const handleSubmit = async e => {
+		e.preventDefault();
+
+		try {
+			const res = await axios.post("/api/auth", { ...formValues });
+			setIdentity({ ...res.data });
+			history.push("/");
+		} catch (e) {
+			console.log("e", e);
+			setErrors({ ...errors, e });
+		}
+	};
+
 	return (
 		<div className="is-flex full-height center-center">
-			<form action="" className="wide-width">
+			<form onSubmit={ handleSubmit } className="wide-width">
 				<div className="field">
 					<label className="label">Email</label>
 					<div className="control">
-						<input className="input" type="text" name="email" placeholder="john@doe.com" />
+						<input
+							className="input"
+							type="email"
+							name="email"
+							placeholder="john@doe.com"
+							value={ formValues.email || "" }
+							onChange={ handleChange }
+						/>
 					</div>
 				</div>
 
 				<div className="field">
 					<label className="label">Password</label>
 					<div className="control">
-						<input className="input" type="password" name="password" placeholder="" />
+						<input
+							className="input"
+							type="password"
+							name="password"
+							value={ formValues.password || "" }
+							onChange={ handleChange }
+						/>
 					</div>
 				</div>
 
