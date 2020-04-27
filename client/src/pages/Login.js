@@ -20,8 +20,7 @@ const Login = ({ history }) => {
 			setIdentity({ ...res.data });
 			history.push("/");
 		} catch (e) {
-			console.log("e", e);
-			setErrors({ ...errors, e });
+			setErrors({ ...errors, ...(e.response.data) });
 		}
 	};
 
@@ -53,6 +52,7 @@ const Login = ({ history }) => {
 							onChange={ handleChange }
 						/>
 					</div>
+					{ errors && <p className="help is-danger">{ errors.error }</p> }
 				</div>
 
 				<div className="field is-grouped">
