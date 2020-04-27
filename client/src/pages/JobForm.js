@@ -16,6 +16,11 @@ const JobForm = ({ history }) => {
 
 	const handleSubmit = async e => {
 		e.preventDefault();
+
+		if (!formValues.posting_date) {
+			formValues.posting_date = new Date();
+		}
+
 		try {
 			const res = await axios.post("/api/jobs", { ...formValues });
 			history.push(res.data.slug);
