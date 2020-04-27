@@ -15,7 +15,7 @@ class AuthService {
 				throw new AuthError(AuthError.PASSWORD_EMAIL_MISMATCH_MSG);
 			}
 
-			const payload = { user_id: user.id, email: user.email };
+			const payload = { user_id: user.id, email: user.email, role_name: user.role_name };
 			const key = JWK.asKey(process.env.JWT_SECRET);
 
 			return JWT.sign(payload, key, { expiresIn: "1d" });
