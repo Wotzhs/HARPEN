@@ -16,7 +16,7 @@ router.use((req, res, next) => {
 router.get("/", async (req, res, next) => {
 	const { offset, limit, email } = req.query;
 	// get own jobs
-	if ((email && !req.token_decrypted) || (req.token_decrypted && email !== req.token_decrypted.email)) {
+	if ((email && !req.token_decrypted) || (req.token_decrypted && email && email !== req.token_decrypted.email)) {
 		res.status(HttpStatus.UNAUTHORIZED);
 		return res.json({ error: HttpStatus.getStatusText(HttpStatus.UNAUTHORIZED) });
 	}
