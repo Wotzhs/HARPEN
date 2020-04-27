@@ -21,9 +21,14 @@ router.get("/", async (req, res, next) => {
 		return res.json({ error: HttpStatus.getStatusText(HttpStatus.UNAUTHORIZED) });
 	}
 
+	let role_name;
+	if (req.token_decrypted && req.token_decrypted.role_name) {
+		role_name = req.token_decrypted.role_name;
+	}
+
 	const result = email
 		? await JobService.getOwnJobList({ offset, limit, user_id: req.token_decrypted.user_id })
-		: await JobService.getJobList({ offset, limit, role_name: req.token_decrypted.role_name });
+		: await JobService.getJobList({ offset, limit, role_name });
 
 	if (result instanceof Error) {
 		console.log(result);
