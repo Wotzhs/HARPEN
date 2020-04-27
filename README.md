@@ -1,3 +1,5 @@
+![Deploy](https://github.com/Wotzhs/HAPEN/workflows/Deploy/badge.svg?branch=master)
+
 # H~~A~~RPEN
 
 H~~A~~RPEN is a <b>H</b>eroku ~~<b>A</b>ngular~~ <b>R</b>eact <b>P</b>ostgres <b>E</b>xpress <b>N</b>odejs application.
