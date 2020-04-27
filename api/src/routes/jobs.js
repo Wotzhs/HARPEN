@@ -21,7 +21,7 @@ router.get("/:slug", async (req, res, next) =>{
 });
 
 router.post("/", async (req, res, next) => {
-	if (!req.token_decrypted.user_id) {
+	if (!req.token_decrypted || !req.token_decrypted.user_id) {
 		res.status(HttpStatus.UNAUTHORIZED);
 		return res.json({ error: HttpStatus.getStatusText(HttpStatus.UNAUTHORIZED) });
 	}
