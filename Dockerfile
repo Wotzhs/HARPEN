@@ -37,7 +37,7 @@ RUN mkdir -p app/public
 RUN mkdir -p app/node_modules
 RUN mkdir -p app/migrations
 
-COPY --from=client_builder /client/dist/client app/public
+COPY --from=client_builder /client/dist app/public
 COPY --from=api_builder app/dist app
 COPY --from=api_builder app/node_modules app/node_modules
 COPY --from=api_builder app/migrations app/migrations
