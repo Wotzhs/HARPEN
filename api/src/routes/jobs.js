@@ -13,7 +13,14 @@ router.use((req, res, next) => {
 });
 
 router.get("/", async (req, res, next) => {
-	res.json();
+	const { offset, limit } = req.query;
+	const result = await JobService.getJobList({ offset, limit });
+	if (result instanceof Error) {
+		console.log(result);
+		res.status(HttpStatus.INTERNAL_SERVER_ERROR);
+		return res.json({ error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR )});
+	}
+	res.json(result);
 });
 
 router.get("/:slug", async (req, res, next) =>{

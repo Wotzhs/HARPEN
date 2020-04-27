@@ -51,6 +51,33 @@ class JobsService {
 
 	}
 
+	static async getJobList({ offset, limit }) {
+		try {
+			let sql = `
+				SELECT j.slug, j.title, j.location, j.description, j.posting_date, j.jd_file, u.email
+				FROM jobs j
+				LEFT JOIN users u on j.user_id = u.id
+				WHERE j.status <> false
+				ORDER BY j.posting_date DESC
+			`;
+
+			if (offset && limit) {
+				sql += "LIMIT $1 OFFSET $2";
+			}
+
+			const result = await pool.query(
+				sql,
+				offset && limit ? [ limit, offset ] : null
+			);
+
+			const totalCount = await pool.query("SELECT COUNT(id) FROM jobs");
+
+			return { total_count: totalCount.rows[0].count*1, results: result.rows };
+		} catch (e) {
+			return e;
+		}
+	}
+
 	static async deleteJob(id) {
 
 	}
