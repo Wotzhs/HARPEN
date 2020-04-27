@@ -58,7 +58,7 @@ const JobDetails = ({ match }) => {
 							</Link>
 						}
 					</div>
-					<p>{ job.description }</p>
+					<p className="white-space-pre">{ job.description }</p>
 				</div>
 			</section>
 		</div>

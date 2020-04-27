@@ -12,6 +12,26 @@
 	width: 45vw;
 }
 
+.wider-width {
+	width: 65vw;
+}
+
+.auto-margin {
+	margin: auto;
+}
+
 .flex-space-between {
 	justify-content: space-between;
+}
+
+.flex-align-baseline {
+	align-items: baseline;
+}
+
+.has-small-right-margin {
+	margin-right: 10px;
+}
+
+.white-space-pre {
+	white-space: pre;
 }
