@@ -87,25 +87,25 @@ router.put("/", async (req, res, next) => {
 		return res.json({ error: HttpStatus.getStatusText(HttpStatus.UNAUTHORIZED) });
 	}
 
-	const updatedJob = new Job({ ...req.body });
+	const updatedJob = new Job({ ...req.body, user_id: req.token_decrypted.user_id });
 	const errors = updatedJob.validate({ extraFields: [ "slug" ] });
 	if (errors) {
 		res.status(HttpStatus.BAD_REQUEST);
 		return res.json({ error: errors });
 	}
 
-	const result = await JobService.updateJob({ updatedJob, user_id: req.token_decrypted.user_id });
-	if (result instanceof RecordNotFoundError) {
+	const slug = await JobService.updateJob({ updatedJob, user_id: req.token_decrypted.user_id });
+	if (slug instanceof RecordNotFoundError) {
 		res.status(HttpStatus.BAD_REQUEST);
-		return res.json({ error: result.message });
+		return res.json({ error: slug.message });
 	}
-	if (result instanceof Error) {
-		console.log(result);
+	if (slug instanceof Error) {
+		console.log(slug);
 		res.status(HttpStatus.INTERNAL_SERVER_ERROR);
 		return res.json({ error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR) });
 	}
 
-	res.json({ result });
+	res.json(slug);
 });
 
 router.delete("/", async (req, res, next) => {
