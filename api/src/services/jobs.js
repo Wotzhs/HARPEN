@@ -1,6 +1,8 @@
 import { v4 as uuidV4 } from "uuid";
 import Job from "../models/job";
+import Role from "../models/role";
 import pool from "../db";
+import { RecordNotFoundError } from "../models/error";
 
 class JobsService {
 	static async createJob(job) {
@@ -47,8 +49,28 @@ class JobsService {
 		}
 	}
 
-	static async getJobBySlug(slug) {
+	static async getJobBySlug({ slug, role_name }) {
+		try {
+			let sql = `
+				SELECT j.title, j.location, j.description, j.posting_date, j.jd_file, u.email
+				FROM jobs j
+				LEFT JOIN users u on j.user_id = u.id
+				WHERE j.slug = $1
+			`;
 
+			if (role_name !== Role.RECRUITER) {
+				sql += "AND j.status <> false";
+			}
+
+			const result = await pool.query(sql, [ slug ]);
+			if (result.rowCount < 1) {
+				throw new RecordNotFoundError("the requested url is not found");
+			}
+
+			return result.rows[0];
+		} catch (e) {
+			return e;
+		}
 	}
 
 	static async getJobList({ offset, limit }) {

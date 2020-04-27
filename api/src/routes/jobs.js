@@ -4,6 +4,7 @@ import Job from "../models/job";
 import UsersService from "../services/users";
 import AuthService from "../services/auth";
 import JobService from "../services/jobs";
+import { RecordNotFoundError } from "../models/error";
 
 const router = express.Router();
 
@@ -18,13 +19,28 @@ router.get("/", async (req, res, next) => {
 	if (result instanceof Error) {
 		console.log(result);
 		res.status(HttpStatus.INTERNAL_SERVER_ERROR);
-		return res.json({ error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR )});
+		return res.json({ error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR ) });
 	}
 	res.json(result);
 });
 
 router.get("/:slug", async (req, res, next) =>{
-	res.json();
+	const result = await JobService.getJobBySlug({
+		slug: req.params.slug,
+		role_name: req.token_decrypted && req.token_decrypted.role_name
+	});
+	if (result instanceof RecordNotFoundError) {
+		res.status(HttpStatus.NOT_FOUND);
+		return res.json({ error: result.message });
+	}
+
+	if (result instanceof Error) {
+		console.log(result);
+		res.status(HttpStatus.INTERNAL_SERVER_ERROR);
+		return res.json({ error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR) });
+	}
+
+	res.json(result);
 });
 
 router.post("/", async (req, res, next) => {
