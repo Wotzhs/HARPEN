@@ -10,6 +10,8 @@ class JobsService {
 			return Error(Job.INCORRECT_INSTANCE_MSG);
 		}
 
+		job.slugify();
+
 		const { slug, title, location, description, posting_date, status, jd_file, user_id } = job;
 
 		// generate unique slug
@@ -20,7 +22,10 @@ class JobsService {
 			);
 
 			if (result.rowCount > 0) {
-				const counter = result.rows[0].slug.split("-").pop();
+				let counter = result.rows[0].slug.split("-").pop();
+				if (isNaN(counter)) {
+					counter = 0;
+				}
 				job.slugify(counter*1+1);
 			}
 		} catch (e) {
@@ -33,11 +38,12 @@ class JobsService {
 				`
 				INSERT INTO jobs(id, slug, title, location, description, posting_date, status, jd_file, user_id) 
 				VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-				RETURNING id
+				RETURNING id, slug
 				`,
 				[ uuidV4(), job.slug, title, location, description, posting_date, status, jd_file, user_id ]
 			);
-			return result.rows[0].id;
+			
+			return result.rows[0];
 		} catch (e) {
 			return e;
 		}
