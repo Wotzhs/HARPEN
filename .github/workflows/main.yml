@@ -22,3 +22,7 @@ jobs:
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
       run: heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} web 
+    - name: DB Migrations
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
+      run: heroku run -a ${{ secrets.HEROKU_APP_NAME }} node_modules/.bin/db-migrate up
