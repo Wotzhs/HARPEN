@@ -23,7 +23,7 @@ router.get("/", async (req, res, next) => {
 
 	const result = email
 		? await JobService.getOwnJobList({ offset, limit, user_id: req.token_decrypted.user_id })
-		: await JobService.getJobList({ offset, limit });
+		: await JobService.getJobList({ offset, limit, role_name: req.token_decrypted.role_name });
 
 	if (result instanceof Error) {
 		console.log(result);
