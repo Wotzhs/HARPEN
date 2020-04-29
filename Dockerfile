@@ -33,9 +33,6 @@ RUN npm run transpile
 # =====================
 FROM alpine:latest
 RUN apk add nodejs
-RUN mkdir -p app/public
-RUN mkdir -p app/node_modules
-RUN mkdir -p app/migrations
 
 COPY --from=client_builder /client/dist app/public
 COPY --from=api_builder app/dist app
