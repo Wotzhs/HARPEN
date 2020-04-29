@@ -2,9 +2,13 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { IdentityContext } from "../contexts/Identity";
 
-const Menu = () => {
+const Menu = ({ history }) => {
 	const { isLoggedIn, setIdentity } = useContext(IdentityContext);
 	const [ activeBurgerMenu, setActiveBurgerMenu ] = useState(false);
+	const handleLogout = () => {
+		setIdentity(null);
+		history.push("/");
+	};
 
 	return (
 		<nav className="navbar" role="navigation" aria-label="main navigation">
@@ -55,7 +59,7 @@ const Menu = () => {
 								</React.Fragment>
 							}
 							{ isLoggedIn &&
-								<button className="button is-danger" onClick={ () => setIdentity(null) }>
+								<button className="button is-danger" onClick={ handleLogout }>
 									Log out
 								</button>
 							}

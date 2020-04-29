@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { IdentityContext } from "../contexts/Identity";
 
-const Signup = () => {
+const Signup = ({ history }) => {
 	const [ formValues, setFormValues ] = useState({});
 	const [ errors, setErrors ] = useState({});
 	const [ showSuccessMsg, setShowSuccessMsg ] = useState(false);
+	const { isLoggedIn } = useContext(IdentityContext);
+	if (isLoggedIn) {
+		history.push("/");
+	}
 
 	const handleChange = e => {
 		setFormValues({ ...formValues, [e.target.name]: e.target.value });
