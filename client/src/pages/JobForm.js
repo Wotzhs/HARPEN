@@ -1,8 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import DatePicker from "react-date-picker";
+import { IdentityContext } from "../contexts/Identity";
 
 const JobForm = ({ match, history }) => {
+	const { isLoggedIn } = useContext(IdentityContext);
+	if (!isLoggedIn) {
+		history.push("/login");
+	}
+
 	const [ formValues, setFormValues ] = useState({});
 	const [ errors, setErrors ] = useState({});
 

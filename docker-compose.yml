@@ -1,6 +1,13 @@
 # sample for local development
 version: "3.7"
 services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgres://postgres@db:5432/postgres
+      - JWT_SECRET=$JWT_SECRET
   db:
     image: postgres
     ports:

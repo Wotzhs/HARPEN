@@ -6,7 +6,10 @@ import { IdentityContext } from "../contexts/Identity";
 const Login = ({ history }) => {
 	const [ formValues, setFormValues ] = useState({});
 	const [ errors, setErrors ] = useState({});
-	const { setIdentity } = useContext(IdentityContext);
+	const { isLoggedIn, setIdentity } = useContext(IdentityContext);
+	if (isLoggedIn) {
+		history.push("/");
+	}
 
 	const handleChange = e => {
 		setFormValues({ ...formValues, [e.target.name]: e.target.value });
