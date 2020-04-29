@@ -22,10 +22,23 @@ export JWT_SECRET=dirty_secret
 
 ### Running the the application
 
-#### API
+#### Production environment in localhost
+
+This assumes you have `docker` & `docker-compose` installed.
+
+```shell
+cd to project root
+export JWT_SECRET=dirty_secret
+docker-compose up -d
+```
+
+#### Development
+
+##### API
 ```shell
 cd api
 npm i
+npm run watch:dev
 ```
 
 At this point, a postges should be running either locally on the host, or in a docker container
@@ -36,14 +49,14 @@ export JWT_SECRET=somesecret
 npm run migrate:up
 ```
 
-#### Client
+##### Client
 ```shell
 cd client
 npm i
 npm run dev
 ```
 
-#### CORS issue
+##### CORS issue
 As this point, the client application will be listening on port 4200 while the API application will be listening on port 3000 by default.
 
 The client will not be able to connect to the API directly as the CORS is not enabled on the API. To overcome that, I have used [caddy](https://caddyserver.com/) to run a reverse proxy between the two application and the content of the caddy file is as below:
